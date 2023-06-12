@@ -1,5 +1,5 @@
-# Revision history for sequence-search
+# Revision history for search-word
 
-## 0.0.0.1 -- YYYY-mm-dd
+## 0.0.0.1 -- 2023-06-12
 
-* First version. Released on an unsuspecting world.
+- Algorithm finds matches. But can not handle cases where multiple patterns begin the same
