@@ -22,5 +22,6 @@ executable sequence-search
     -- other-modules:
     -- other-extensions:
     build-depends:    base ^>=4.16.4.0
+                      , extra ^>=1.7.13
     hs-source-dirs:   app
     default-language: Haskell2010
