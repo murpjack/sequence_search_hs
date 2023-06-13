@@ -1,5 +1,6 @@
 module Main where
 
+import qualified Data.List as List
 import qualified System.Environment as SysEnv
 import qualified System.IO as SysIO
 import qualified SequenceSearch

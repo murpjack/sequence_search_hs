@@ -1,6 +1,6 @@
 module SequenceSearch (writeLn) where
 
-import qualified Data.List as List
+import Data.List as List
 import qualified Data.Tuple.Extra as Tuple
 
 wrapExpr :: String -> String
