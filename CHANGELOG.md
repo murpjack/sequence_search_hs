@@ -7,3 +7,7 @@
 ## 0.0.0.2 -- 2023-06-12
 
 - Fix - now handles cases where many patterns begin the same.
+
+## 0.0.0.3 -- 2023-06-12
+
+- Fix - handle case of no sequence matches and then a match

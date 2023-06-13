@@ -38,7 +38,16 @@ writeLn ptns =
                 let ptn = ptnLs !! List.head ns
                  in (ln, [List.head ptn], findMatches ptnLs ns)
             else case List.findIndices (\ptn -> (cache ++ [t]) `isPrefixOf` ptn) partMatches of
-              [] -> (ln ++ " " ++ wrapExpr (List.unwords cache) ++ " " ++ t, [], [])
+              [] -> case List.findIndices (\ptn -> List.head ptn == t) ptnLs of
+                [] -> (ln ++ " " ++ wrapExpr (List.unwords cache) ++ " " ++ t, [], [])
+                [n] ->
+                  let ptn = ptnLs !! n
+                   in if List.length ptn > 1
+                        then (ln, [List.head ptn], [ptnLs !! n])
+                        else (ln ++ " " ++ wrapExpr (List.unwords cache) ++ " " ++ wrapExpr t, [], [])
+                ns ->
+                  let ptn = ptnLs !! List.head ns
+                   in (ln, [List.head ptn], findMatches ptnLs ns)
               [n] ->
                 let ptn = partMatches !! n
                  in if List.length ptn > List.length (cache ++ [t])
