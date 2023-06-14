@@ -1,18 +1,25 @@
 module Main (main) where
 
 import Control.Exception (evaluate)
-import System.TimeIt (timeIt)
-import SequenceSearch (writeLn)
+import System.TimeIt (timeItNamed)
+import qualified SequenceSearch
+import qualified SequenceSearchText
+import qualified Data.Text as Text
+import Data.Text (Text)
 import System.Timeout (timeout)
 
 main = do
   putStrLn "Benchmarks about to start!"
-  v <- timeIt $ withTimeout $ evaluate $
+  () <- timeItNamed "SequenceSearch" $ withTimeout $ evaluate $
       sum $
-      map (length . writeLn needles) $
+      map (length . SequenceSearch.writeLn needles) $
       replicate 100 haystack
 
-  print v
+  () <- timeItNamed "SequenceSearchText" $ withTimeout $ evaluate $
+      sum $
+      map (Text.length . SequenceSearchText.writeLn needlesTxt) $
+      replicate 100 haystackTxt
+
   putStrLn "Benchmark complete."
   where
 
@@ -23,10 +30,16 @@ main = do
       Nothing -> putStrLn "Timed out!"
       Just x -> print x
 
+needlesTxt :: [Text]
+needlesTxt = map Text.pack needles
+
 needles :: [String]
 needles = map toNeedle [1..100]
   where
   toNeedle n = take n $ drop n haystack
+
+haystackTxt :: Text
+haystackTxt = Text.pack haystack
 
 haystack :: String
 haystack = unwords $ concat $ replicate 1000
