@@ -9,5 +9,11 @@ main = hspec spec
 spec :: Spec
 spec =
   describe "sequence-search" $ do
-    it "basic 1" $ do
+    it "match one" $ do
       writeLn ["A"] "A" `shouldBe` "{A}"
+
+    it "match different" $ do
+      writeLn ["A B"] "A A" `shouldBe` "A A"
+
+    it "second match" $ do
+      writeLn ["A B", "C"] "A C" `shouldBe` "A {C}"
