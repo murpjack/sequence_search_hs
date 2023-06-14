@@ -4,6 +4,7 @@ import Control.Exception (evaluate)
 import System.TimeIt (timeItNamed)
 import qualified SequenceSearch
 import qualified SequenceSearchText
+import qualified SequenceSearchTrie
 import qualified Data.Text as Text
 import Data.Text (Text)
 import System.Timeout (timeout)
@@ -14,6 +15,14 @@ main = do
       sum $
       map (length . SequenceSearch.writeLn needles) $
       replicate 100 haystack
+
+  () <- timeItNamed "SequenceSearchTrie" $ withTimeout $ evaluate $
+      sum $
+      map (length . SequenceSearchTrie.writeLn needles) $
+      replicate 100 haystack
+
+  needlesTxt <- evaluate $ map Text.pack needles
+  haystackTxt <- evaluate $ Text.pack haystack
 
   () <- timeItNamed "SequenceSearchText" $ withTimeout $ evaluate $
       sum $
@@ -30,16 +39,11 @@ main = do
       Nothing -> putStrLn "Timed out!"
       Just x -> print x
 
-needlesTxt :: [Text]
-needlesTxt = map Text.pack needles
 
 needles :: [String]
 needles = map toNeedle [1..100]
   where
   toNeedle n = take n $ drop n haystack
-
-haystackTxt :: Text
-haystackTxt = Text.pack haystack
 
 haystack :: String
 haystack = unwords $ concat $ replicate 1000
